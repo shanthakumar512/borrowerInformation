@@ -1,19 +1,21 @@
 /**
  * 
  */
-package com.rabobank.userInformation.services;
+package com.rabobank.userinformation.services;
 
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
-import com.rabobank.userInformation.Repository.LoanUsersRepository;
-import com.rabobank.userInformation.exceptions.LoanUserNotFoundException;
-import com.rabobank.userInformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
-import com.rabobank.userInformation.model.Address;
-import com.rabobank.userInformation.model.LoanUser;
-import com.rabobank.userInformation.request.LoanUserRequest;
+import com.rabobank.userinformation.Repository.LoanUsersRepository;
+import com.rabobank.userinformation.exceptions.LoanUserNotFoundException;
+import com.rabobank.userinformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
+import com.rabobank.userinformation.model.Address;
+import com.rabobank.userinformation.model.LoanUser;
+import com.rabobank.userinformation.request.LoanUserRequest;
 
 /**
  * @author Admin
@@ -21,16 +23,19 @@ import com.rabobank.userInformation.request.LoanUserRequest;
  */
 @Service
 public class LoanUsersServiceImpl implements LoanUsersService {
+	private static final Logger logger = LoggerFactory.getLogger(LoanUsersServiceImpl.class);
 	
 	@Autowired
 	LoanUsersRepository loanUsersRepository;
 	
 
 	@Override
-	public String addLoanUser(LoanUserRequest addUserRequest) throws UserDetailsAlreadyExistForEmailIDException {
-		
-		if (loanUsersRepository.existsByUserEmail(addUserRequest.getUserEmail())) {
-				throw new UserDetailsAlreadyExistForEmailIDException("User Details already exists for the email Id"+addUserRequest.getUserEmail());
+	public LoanUser addLoanUser(LoanUserRequest addUserRequest) throws UserDetailsAlreadyExistForEmailIDException {
+		logger.info("Entered addLoanUser() for new user with first Name {}", addUserRequest.getUserFirstname());
+		if (Boolean.TRUE.equals(loanUsersRepository.existsByUserEmail(addUserRequest.getUserEmail()))) {
+			logger.info("User Details already exists for the email Id {}", addUserRequest.getUserEmail());
+			throw new UserDetailsAlreadyExistForEmailIDException(
+					"User Details already exists for the email Id" + addUserRequest.getUserEmail());
 		}
 		LoanUser loanUser =new LoanUser(addUserRequest.getUserFirstname(), addUserRequest.getUserLastname() ,addUserRequest.getUserEmail());
 		
@@ -39,28 +44,27 @@ public class LoanUsersServiceImpl implements LoanUsersService {
 		loanUser.setPropertyAddress(address);
 		
 		loanUsersRepository.save(loanUser);	
-		return ("Loan User registered successfully!");
+		logger.info("User Details saved successfully");
+		return loanUser;
 	}
 	
 	@Override
 	public List<LoanUser> findAllUsers() {
+		logger.info("Entered findAllUsers()");
 		return loanUsersRepository.findAll();
 	}
 
 	@Override
 	public LoanUser findByFirstName(String userFirstName) throws LoanUserNotFoundException {
-		
-		LoanUser user = loanUsersRepository.findByUserFirstname(userFirstName)
+		return loanUsersRepository.findByUserFirstname(userFirstName)
 				.orElseThrow(() -> new LoanUserNotFoundException("Loan User Not Found with user Firstname: " + userFirstName));
-		return user;
 	}
 
 
 	@Override
 	public LoanUser findByLastName(String userLastName) throws LoanUserNotFoundException {
 		
-		LoanUser user = loanUsersRepository.findByUserLastname(userLastName)
+		return loanUsersRepository.findByUserLastname(userLastName)
 				.orElseThrow(() -> new LoanUserNotFoundException("Loan User Not Found with user Lastname: " + userLastName));
-		return user;
 	}
 }

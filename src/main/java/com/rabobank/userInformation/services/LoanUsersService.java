@@ -1,14 +1,14 @@
 /**
  * 
  */
-package com.rabobank.userInformation.services;
+package com.rabobank.userinformation.services;
 
 import java.util.List;
 
-import com.rabobank.userInformation.exceptions.LoanUserNotFoundException;
-import com.rabobank.userInformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
-import com.rabobank.userInformation.model.LoanUser;
-import com.rabobank.userInformation.request.LoanUserRequest;
+import com.rabobank.userinformation.exceptions.LoanUserNotFoundException;
+import com.rabobank.userinformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
+import com.rabobank.userinformation.model.LoanUser;
+import com.rabobank.userinformation.request.LoanUserRequest;
 
 
 /**
@@ -17,7 +17,7 @@ import com.rabobank.userInformation.request.LoanUserRequest;
  */
 public interface LoanUsersService {
 	
-	public String addLoanUser(LoanUserRequest loanUserRequest) throws UserDetailsAlreadyExistForEmailIDException;
+	public LoanUser addLoanUser(LoanUserRequest loanUserRequest) throws UserDetailsAlreadyExistForEmailIDException;
 	
 	public List<LoanUser> findAllUsers();
 	

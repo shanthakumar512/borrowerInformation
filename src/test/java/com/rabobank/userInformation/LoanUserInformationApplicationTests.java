@@ -9,5 +9,5 @@ class LoanUserInformationApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
+	
 }

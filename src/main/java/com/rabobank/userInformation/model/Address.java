@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.rabobank.userInformation.model;
+package com.rabobank.userinformation.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;

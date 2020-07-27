@@ -1,12 +1,14 @@
 /**
  * 
  */
-package com.rabobank.userInformation.controllers;
+package com.rabobank.userinformation.controllers;
 
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rabobank.userInformation.exceptions.LoanUserNotFoundException;
-import com.rabobank.userInformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
-import com.rabobank.userInformation.model.LoanUser;
-
-import com.rabobank.userInformation.request.LoanUserRequest;
-import com.rabobank.userInformation.services.LoanUsersService;
+import com.rabobank.userinformation.exceptions.LoanUserNotFoundException;
+import com.rabobank.userinformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
+import com.rabobank.userinformation.model.LoanUser;
+import com.rabobank.userinformation.request.LoanUserRequest;
+import com.rabobank.userinformation.services.LoanUsersService;
 
 /**
  * @author Shanthakumar
@@ -33,29 +34,37 @@ import com.rabobank.userInformation.services.LoanUsersService;
 @RequestMapping("/loanUser")
 public class LoanUserInformationController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(LoanUserInformationController.class);
+	
 	@Autowired
 	LoanUsersService  loanUsersService;
 	
 	@PostMapping("/addLoanUser")
-	public ResponseEntity<?> addLoanUser(@Valid @RequestBody LoanUserRequest loanUserRequest) throws UserDetailsAlreadyExistForEmailIDException{		
+	public ResponseEntity<List<LoanUser>> addLoanUser(@Valid @RequestBody LoanUserRequest loanUserRequest) throws UserDetailsAlreadyExistForEmailIDException{		
+		logger.info("Add user information request with User Name {} User Email {} ", loanUserRequest.getUserFirstname(),loanUserRequest.getUserEmail());
+	
 		loanUsersService.addLoanUser(loanUserRequest);
-		return new ResponseEntity<String> ("Loan User added sucessfully!", HttpStatus.OK);
+		logger.info("Loan user information Added successfullly"); 
+		List<LoanUser> loanUsers= loanUsersService.findAllUsers();
+		logger.info("Total users added {}", loanUsers.size());
+		return  new ResponseEntity<>(loanUsers, HttpStatus.OK);
 	}
 	
 	@GetMapping("/getLoanUsers")
-	public ResponseEntity<?> getLoanUser(){		
-		
-		return new ResponseEntity<List<LoanUser>> (loanUsersService.findAllUsers(), HttpStatus.OK);
+	public ResponseEntity<List<LoanUser>> getLoanUser(){		
+		logger.info("Entered request for find all Loan users");
+		return new ResponseEntity<> (loanUsersService.findAllUsers(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/getLoanUserByFirstName/{userFirstName}")
-	public ResponseEntity<?> getLoanUserByFirstName(@PathVariable String userFirstName) throws LoanUserNotFoundException{			
-		return new ResponseEntity<LoanUser> (loanUsersService.findByFirstName(userFirstName), HttpStatus.OK);
+	public ResponseEntity<LoanUser> getLoanUserByFirstName(@PathVariable String userFirstName) throws LoanUserNotFoundException{	
+		logger.info("Search request for Loan with firstName :{} ", userFirstName);
+		return new ResponseEntity<> (loanUsersService.findByFirstName(userFirstName), HttpStatus.OK);
 	}
 	
 	@GetMapping("/getLoanUserByLastName/{userLastName}")
-	public ResponseEntity<?> getLoanUserByLastName(@PathVariable String userLastName) throws LoanUserNotFoundException{		
-		
-		return new ResponseEntity<LoanUser> (loanUsersService.findByLastName(userLastName), HttpStatus.OK);
+	public ResponseEntity<LoanUser> getLoanUserByLastName(@PathVariable String userLastName) throws LoanUserNotFoundException{		
+		logger.info("Search request for Loan with Last Name :{} ", userLastName);
+		return new ResponseEntity<> (loanUsersService.findByLastName(userLastName), HttpStatus.OK);
 	}
 }

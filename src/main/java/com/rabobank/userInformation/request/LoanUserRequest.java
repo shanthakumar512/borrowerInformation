@@ -1,9 +1,9 @@
-package com.rabobank.userInformation.request;
+package com.rabobank.userinformation.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import com.rabobank.userInformation.model.Address;
+import com.rabobank.userinformation.model.Address;
 
 
 public class LoanUserRequest {
