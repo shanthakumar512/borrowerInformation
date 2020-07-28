@@ -30,17 +30,7 @@ import com.rabobank.userinformation.model.ErrorResponse;
 @ControllerAdvice
 public class GlobalExceptionHandler   extends ResponseEntityExceptionHandler{
 	Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-	
-    @ExceptionHandler(IOException.class)
-	public @ResponseBody ErrorResponse handleIOException( IOException exception) {
-    	 List<String> details = new ArrayList<>();
-         details.add(exception.getLocalizedMessage());
-    	ErrorResponse errorResponse = new ErrorResponse("IO Exception", details);
-    	
-		log.error("IO Exception Occured: {}", exception.getMessage());
-		return errorResponse;
-	}
-    
+
     @ExceptionHandler(LoanUserNotFoundException.class)
 	public @ResponseBody ResponseEntity<ErrorResponse> handleLoanUserNotFoundException( LoanUserNotFoundException exception) {
     	 List<String> details = new ArrayList<>();
