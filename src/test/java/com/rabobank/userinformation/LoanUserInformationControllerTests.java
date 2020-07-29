@@ -43,11 +43,6 @@ class LoanUserInformationControllerTests {
 		return "http://localhost:" + port;
 	}
 	
-	
-	@Test
-	void contextLoads() {
-	}
-	
 	@Test
 	@Rollback(false)
 	void addLoanUserFromControllerTest() {
@@ -78,7 +73,7 @@ class LoanUserInformationControllerTests {
 	
 	@Test
 	@Rollback(false)
-	void findByFirstNameFromControllerTest() throws LoanUserNotFoundException {
+	void findByFirstNameFromControllerTest() {
 		 Map<String, String> uriVariables = new HashMap<>();
 		 uriVariables.put("userFirstName", "user1");
 		

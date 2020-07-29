@@ -1,7 +1,6 @@
 package com.rabobank.userinformation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -30,24 +29,23 @@ webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 class LoanUserInformationServicesTest {
 
+	private static final String USER2 = "user2";
+
+	private static final String USER1 = "user1";
+
 	@Autowired 
 	LoanUsersRepository loanUsersRepository;
 	
 	@Autowired 
 	LoanUsersService loanUsersService;
 	
-	
-	
-	@Test
-	void contextLoads() {
-	}
-	
+		
 	@Test
 	@Rollback(false)
 	void addLoanUserTest() throws UserDetailsAlreadyExistForEmailIDException {
 		LoanUserRequest addUserRequest= new LoanUserRequest();
-		addUserRequest.setUserFirstname("user1");
-		addUserRequest.setUserLastname("user1");
+		addUserRequest.setUserFirstname(USER1);
+		addUserRequest.setUserLastname(USER1);
 		addUserRequest.setUserEmail("abc@gmail.com");
 		Address propertyAddress = new Address();
 		propertyAddress.setAddressLine1("a1");
@@ -58,7 +56,7 @@ class LoanUserInformationServicesTest {
 		propertyAddress.setCountry("Ind");
 		addUserRequest.setPropertyAddress(propertyAddress);
 		loanUsersService.addLoanUser(addUserRequest);
-		Optional<LoanUser> info =loanUsersRepository.findByUserFirstname("user1");
+		Optional<LoanUser> info =loanUsersRepository.findByUserFirstname(USER1);
 		assertTrue(info.isPresent());
 	}
 	
@@ -66,8 +64,8 @@ class LoanUserInformationServicesTest {
 	@Rollback(false)
 	void addLoanUserWithAlreadyExistingEmailTest() {
 		LoanUserRequest addUserRequest= new LoanUserRequest();
-		addUserRequest.setUserFirstname("user2");
-		addUserRequest.setUserLastname("user2");
+		addUserRequest.setUserFirstname(USER2);
+		addUserRequest.setUserLastname(USER2);
 		addUserRequest.setUserEmail("abc@gmail.com");
 		Address propertyAddress = new Address();
 		propertyAddress.setAddressLine1("a1");
@@ -85,8 +83,8 @@ class LoanUserInformationServicesTest {
 	@Rollback(false)
 	void addSecondLoanUserTest() throws UserDetailsAlreadyExistForEmailIDException {
 		LoanUserRequest addUserRequest= new LoanUserRequest();
-		addUserRequest.setUserFirstname("user2");
-		addUserRequest.setUserLastname("user2");
+		addUserRequest.setUserFirstname(USER2);
+		addUserRequest.setUserLastname(USER2);
 		addUserRequest.setUserEmail("user2@gmail.com");
 		Address propertyAddress = new Address();
 		propertyAddress.setAddressLine1("a1");
@@ -97,7 +95,7 @@ class LoanUserInformationServicesTest {
 		propertyAddress.setCountry("Ind");
 		addUserRequest.setPropertyAddress(propertyAddress);
 		loanUsersService.addLoanUser(addUserRequest);
-		Optional<LoanUser> info =loanUsersRepository.findByUserFirstname("user2");
+		Optional<LoanUser> info =loanUsersRepository.findByUserFirstname(USER2);
 		assertTrue(info.isPresent());
 	}
 	
@@ -111,8 +109,8 @@ class LoanUserInformationServicesTest {
 	@Test
 	@Rollback(false)
 	void findByFirstNameTest() throws LoanUserNotFoundException {
-		LoanUser user = loanUsersService.findByFirstName("user1");
-		 assertEquals(user.getUserFirstname(), "user1");
+		LoanUser user = loanUsersService.findByFirstName(USER1);
+		 assertEquals(user.getUserFirstname(), USER1);
 	}
 	
 	@Test
@@ -124,8 +122,8 @@ class LoanUserInformationServicesTest {
 	@Test
 	@Rollback(false)
 	void findByLastNameTest() throws LoanUserNotFoundException {
-		LoanUser user = loanUsersService.findByLastName("user1");
-		 assertEquals(user.getUserLastname(), "user1");
+		LoanUser user = loanUsersService.findByLastName(USER1);
+		 assertEquals(user.getUserLastname(), USER1);
 	}
 	
 	
