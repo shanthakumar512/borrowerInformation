@@ -1,4 +1,4 @@
-package com.rabobank.userinformation;
+package com.rabobank.loanuserinformation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,13 +14,13 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.rabobank.userinformation.Repository.LoanUsersRepository;
-import com.rabobank.userinformation.exceptions.LoanUserNotFoundException;
-import com.rabobank.userinformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
-import com.rabobank.userinformation.model.Address;
-import com.rabobank.userinformation.model.LoanUser;
-import com.rabobank.userinformation.request.LoanUserRequest;
-import com.rabobank.userinformation.services.LoanUsersService;
+import com.rabobank.loanuserinformation.Repository.LoanUsersRepository;
+import com.rabobank.loanuserinformation.exceptions.LoanUserNotFoundException;
+import com.rabobank.loanuserinformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
+import com.rabobank.loanuserinformation.model.Address;
+import com.rabobank.loanuserinformation.model.LoanUser;
+import com.rabobank.loanuserinformation.request.LoanUserRequest;
+import com.rabobank.loanuserinformation.services.LoanUsersService;
 
 
 @SpringBootTest(classes = {LoanUserInformationApplication.class, H2JpaConfig.class },

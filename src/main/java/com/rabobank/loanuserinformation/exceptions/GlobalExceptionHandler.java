@@ -1,4 +1,4 @@
-package com.rabobank.userinformation.exceptions;
+package com.rabobank.loanuserinformation.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.rabobank.userinformation.model.ErrorResponse;
+import com.rabobank.loanuserinformation.model.ErrorResponse;
 
 
 /**

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.rabobank.userinformation.services;
+package com.rabobank.loanuserinformation.services;
 
 import java.util.List;
 
@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rabobank.userinformation.Repository.LoanUsersRepository;
-import com.rabobank.userinformation.exceptions.LoanUserNotFoundException;
-import com.rabobank.userinformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
-import com.rabobank.userinformation.model.Address;
-import com.rabobank.userinformation.model.LoanUser;
-import com.rabobank.userinformation.request.LoanUserRequest;
+import com.rabobank.loanuserinformation.Repository.LoanUsersRepository;
+import com.rabobank.loanuserinformation.exceptions.LoanUserNotFoundException;
+import com.rabobank.loanuserinformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
+import com.rabobank.loanuserinformation.model.Address;
+import com.rabobank.loanuserinformation.model.LoanUser;
+import com.rabobank.loanuserinformation.request.LoanUserRequest;
 
 /**
  * @author Admin

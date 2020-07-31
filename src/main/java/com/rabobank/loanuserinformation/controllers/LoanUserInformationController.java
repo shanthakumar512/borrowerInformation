@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.rabobank.userinformation.controllers;
+package com.rabobank.loanuserinformation.controllers;
 
 import java.util.List;
 
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rabobank.userinformation.exceptions.LoanUserNotFoundException;
-import com.rabobank.userinformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
-import com.rabobank.userinformation.model.LoanUser;
-import com.rabobank.userinformation.request.LoanUserRequest;
-import com.rabobank.userinformation.services.LoanUsersService;
+import com.rabobank.loanuserinformation.exceptions.LoanUserNotFoundException;
+import com.rabobank.loanuserinformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
+import com.rabobank.loanuserinformation.model.LoanUser;
+import com.rabobank.loanuserinformation.request.LoanUserRequest;
+import com.rabobank.loanuserinformation.services.LoanUsersService;
 
 /**
  * @author Shanthakumar

@@ -1,4 +1,4 @@
-package com.rabobank.userinformation.model;
+package com.rabobank.loanuserinformation.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
