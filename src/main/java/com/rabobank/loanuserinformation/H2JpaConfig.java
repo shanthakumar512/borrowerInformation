@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories(basePackages = { "com.rabobank.userinformation.*"})
+@EnableJpaRepositories(basePackages = { "com.rabobank.loanuserinformation.*"})
 @PropertySource("classpath:persistence-generic-entity.properties")
 @EnableTransactionManagement
 @Profile("test")
@@ -42,7 +42,7 @@ public class H2JpaConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan( "com.rabobank.userinformation.*");
+        em.setPackagesToScan( "com.rabobank.loanuserinformation.*");
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(additionalProperties());
         return em;

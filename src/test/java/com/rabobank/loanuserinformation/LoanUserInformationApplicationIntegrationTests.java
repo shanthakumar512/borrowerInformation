@@ -12,6 +12,9 @@ import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -25,7 +28,6 @@ import com.rabobank.loanuserinformation.Repository.LoanUsersRepository;
 import com.rabobank.loanuserinformation.exceptions.LoanUserNotFoundException;
 import com.rabobank.loanuserinformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
 import com.rabobank.loanuserinformation.model.Address;
-import com.rabobank.loanuserinformation.model.ErrorResponse;
 import com.rabobank.loanuserinformation.model.LoanUser;
 import com.rabobank.loanuserinformation.request.LoanUserRequest;
 import com.rabobank.loanuserinformation.services.LoanUsersService;
@@ -35,6 +37,7 @@ import com.rabobank.loanuserinformation.services.LoanUsersService;
 webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 @ActiveProfiles("test")
+@EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
 class LoanUserInformationApplicationIntegrationTests {
 
 	@Autowired 

@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +40,6 @@ public class LoanUserInformationController {
 	LoanUsersService  loanUsersService;
 	
 	@PostMapping("/addLoanUser")
-	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<List<LoanUser>> addLoanUser(@Valid @RequestBody LoanUserRequest loanUserRequest) throws UserDetailsAlreadyExistForEmailIDException{		
 		
 		logger.debug("Add user information request with User Name {} User Email {} ", loanUserRequest.getUserFirstname(),loanUserRequest.getUserEmail());
@@ -54,21 +52,18 @@ public class LoanUserInformationController {
 	}
 	
 	@GetMapping("/getLoanUsers")
-	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<List<LoanUser>> getLoanUser(){		
 		logger.debug("Entered request for find all Loan users");
 		return new ResponseEntity<> (loanUsersService.findAllUsers(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/getLoanUserByFirstName/{userFirstName}")
-	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<LoanUser> getLoanUserByFirstName(@PathVariable String userFirstName) throws LoanUserNotFoundException{	
 		logger.info("Search request for Loan with firstName :{} ", userFirstName);
 		return new ResponseEntity<> (loanUsersService.findByFirstName(userFirstName), HttpStatus.OK);
 	}
 	
 	@GetMapping("/getLoanUserByLastName/{userLastName}")
-	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<LoanUser> getLoanUserByLastName(@PathVariable String userLastName) throws LoanUserNotFoundException{		
 		logger.info("Search request for Loan with Last Name :{} ", userLastName);
 		return new ResponseEntity<> (loanUsersService.findByLastName(userLastName), HttpStatus.OK);
