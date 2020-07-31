@@ -43,19 +43,20 @@ public class LoanUserInformationController {
 	@PostMapping("/addLoanUser")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<List<LoanUser>> addLoanUser(@Valid @RequestBody LoanUserRequest loanUserRequest) throws UserDetailsAlreadyExistForEmailIDException{		
-		logger.info("Add user information request with User Name {} User Email {} ", loanUserRequest.getUserFirstname(),loanUserRequest.getUserEmail());
+		
+		logger.debug("Add user information request with User Name {} User Email {} ", loanUserRequest.getUserFirstname(),loanUserRequest.getUserEmail());
 	
 		loanUsersService.addLoanUser(loanUserRequest);
 		logger.info("Loan user information Added successfullly"); 
 		List<LoanUser> loanUsers= loanUsersService.findAllUsers();
-		logger.info("Total users added {}", loanUsers.size());
+		logger.debug("Total users added {}", loanUsers.size());
 		return  new ResponseEntity<>(loanUsers, HttpStatus.OK);
 	}
 	
 	@GetMapping("/getLoanUsers")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<List<LoanUser>> getLoanUser(){		
-		logger.info("Entered request for find all Loan users");
+		logger.debug("Entered request for find all Loan users");
 		return new ResponseEntity<> (loanUsersService.findAllUsers(), HttpStatus.OK);
 	}
 	

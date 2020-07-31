@@ -43,7 +43,6 @@ class LoanUserInformationControllerTests {
 		return "http://localhost:" + port;
 	}
 	
-	@Test
 	@Rollback(false)
 	void addLoanUserFromControllerTest() {
 		LoanUserRequest addUserRequest= new LoanUserRequest();

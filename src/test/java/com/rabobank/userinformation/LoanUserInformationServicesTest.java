@@ -40,7 +40,6 @@ class LoanUserInformationServicesTest {
 	LoanUsersService loanUsersService;
 	
 		
-	@Test
 	@Rollback(false)
 	void addLoanUserTest() throws UserDetailsAlreadyExistForEmailIDException {
 		LoanUserRequest addUserRequest= new LoanUserRequest();

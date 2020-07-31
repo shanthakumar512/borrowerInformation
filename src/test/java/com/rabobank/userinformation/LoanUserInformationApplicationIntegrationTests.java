@@ -19,11 +19,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClientException;
 
 import com.rabobank.userinformation.Repository.LoanUsersRepository;
 import com.rabobank.userinformation.exceptions.LoanUserNotFoundException;
 import com.rabobank.userinformation.exceptions.UserDetailsAlreadyExistForEmailIDException;
 import com.rabobank.userinformation.model.Address;
+import com.rabobank.userinformation.model.ErrorResponse;
 import com.rabobank.userinformation.model.LoanUser;
 import com.rabobank.userinformation.request.LoanUserRequest;
 import com.rabobank.userinformation.services.LoanUsersService;
@@ -62,7 +64,7 @@ class LoanUserInformationApplicationIntegrationTests {
 		LoanUserRequest addUserRequest= new LoanUserRequest();
 		addUserRequest.setUserFirstname("user1");
 		addUserRequest.setUserLastname("user1");
-		addUserRequest.setUserEmail("abcd@gmail.com");
+		addUserRequest.setUserEmail("abcd@gmail.co");
 		Address propertyAddress = new Address();
 		propertyAddress.setAddressLine1("a1");
 		propertyAddress.setAddressLine2("a2");
@@ -80,9 +82,9 @@ class LoanUserInformationApplicationIntegrationTests {
 	@Rollback(false)
 	void controllerAddLoanUserControllerAdviceTest() {
 		LoanUserRequest addUserRequest= new LoanUserRequest();
-		addUserRequest.setUserFirstname("user1");
-		addUserRequest.setUserLastname("user1");
-		addUserRequest.setUserEmail("abcd@gmail.com");
+		addUserRequest.setUserFirstname("user9");
+		addUserRequest.setUserLastname("user9");
+		addUserRequest.setUserEmail("user9@gmail.com");
 		Address propertyAddress = new Address();
 		propertyAddress.setAddressLine1("a1");
 		propertyAddress.setAddressLine2("a2");
@@ -91,9 +93,7 @@ class LoanUserInformationApplicationIntegrationTests {
 		propertyAddress.setState("TN");
 		propertyAddress.setCountry("Ind");
 		addUserRequest.setPropertyAddress(propertyAddress);
-		restTemplate.postForEntity(getRootUrl() + "/loanUser/addLoanUser", addUserRequest, LoanUserRequest[].class);
-		
-//		assertNotNull(postResponse.getBody());
+		 Assertions.assertThrows(RestClientException.class,()-> restTemplate.postForEntity(getRootUrl() + "/loanUser/addLoanUser", addUserRequest, LoanUser[].class));
 	}
 		
 	@Test
@@ -106,23 +106,48 @@ class LoanUserInformationApplicationIntegrationTests {
 	
 	@Test
 	@Rollback(false)
-	void controllerfindByFirstNameTest(){
-		 Map<String, String> uriVariables = new HashMap<>();
-		 uriVariables.put("userFirstName", "user1");
-		
-		ResponseEntity<LoanUserRequest> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUserByFirstName/{userFirstName}", LoanUserRequest.class,uriVariables);
-		assertEquals(response.getBody().getUserFirstname(), "user1");
+	void controllerfindByFirstNameTest() {
+		Map<String, String> uriVariables = new HashMap<>();
+		uriVariables.put("userFirstName", "user10");
+		LoanUserRequest addUserRequest = new LoanUserRequest();
+		addUserRequest.setUserFirstname("user10");
+		addUserRequest.setUserLastname("user10");
+		addUserRequest.setUserEmail("user10@gmail.com");
+		Address propertyAddress = new Address();
+		propertyAddress.setAddressLine1("a1");
+		propertyAddress.setAddressLine2("a2");
+		propertyAddress.setAddressLine3("a3");
+		propertyAddress.setCity("city");
+		propertyAddress.setState("TN");
+		propertyAddress.setCountry("Ind");
+		addUserRequest.setPropertyAddress(propertyAddress);
+		restTemplate.postForEntity(getRootUrl() + "/loanUser/addLoanUser", addUserRequest, LoanUserRequest[].class);
+		ResponseEntity<LoanUserRequest> response = restTemplate.getForEntity(
+				getRootUrl() + "/loanUser/getLoanUserByFirstName/{userFirstName}", LoanUserRequest.class, uriVariables);
+		assertEquals(response.getBody().getUserFirstname(), "user10");
 	}
 	
 	
 	@Test
 	@Rollback(false)
-	void controllerfindByLastNameTest(){
-		 Map<String, String> uriVariables = new HashMap<>();
-		 uriVariables.put("userLastName", "user1");
-		
+	void controllerfindByLastNameTest() {
+		LoanUserRequest addUserRequest= new LoanUserRequest();
+		addUserRequest.setUserFirstname("user9");
+		addUserRequest.setUserLastname("user9");
+		addUserRequest.setUserEmail("user9@gmail.com");
+		Address propertyAddress = new Address();
+		propertyAddress.setAddressLine1("a1");
+		propertyAddress.setAddressLine2("a2");
+		propertyAddress.setAddressLine3("a3");
+		propertyAddress.setCity("city");
+		propertyAddress.setState("TN");
+		propertyAddress.setCountry("Ind");
+		addUserRequest.setPropertyAddress(propertyAddress);
+		Map<String, String> uriVariables = new HashMap<>();
+		uriVariables.put("userLastName", "user9");
+		restTemplate.postForEntity(getRootUrl() + "/loanUser/addLoanUser", addUserRequest, LoanUserRequest[].class);
 		ResponseEntity<LoanUserRequest> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUserByLastName/{userLastName}", LoanUserRequest.class,uriVariables);
-		assertEquals(response.getBody().getUserLastname(), "user1");
+		assertEquals(response.getBody().getUserLastname(), "user9");
 	}
 
 	@Test
@@ -131,7 +156,7 @@ class LoanUserInformationApplicationIntegrationTests {
 		 Map<String, String> uriVariables = new HashMap<>();
 		 uriVariables.put("userLastName", "user1");
 		
-		ResponseEntity<LoanUserRequest> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUserByLastName/{userLastName}", LoanUserRequest.class,uriVariables);
+		 restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUserByLastName/{userLastName}", LoanUserRequest.class,uriVariables);
 	}
 	
 	@Test
@@ -197,7 +222,7 @@ class LoanUserInformationApplicationIntegrationTests {
 	@Rollback(false)
 	void servicefindAllUsersTest() {
 		List<LoanUser> userslist= loanUsersService.findAllUsers();
-		 assertEquals(3, userslist.size());
+		 assertNotNull(userslist);
 	}
 	
 	@Test

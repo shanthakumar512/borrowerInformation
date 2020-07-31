@@ -1,6 +1,5 @@
 package com.rabobank.userinformation.exceptions;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class GlobalExceptionHandler   extends ResponseEntityExceptionHandler{
 	public @ResponseBody ResponseEntity<ErrorResponse> handleLoanUserNotFoundException( LoanUserNotFoundException exception) {
     	 List<String> details = new ArrayList<>();
          details.add(exception.getLocalizedMessage());
-    	ErrorResponse errorResponse = new ErrorResponse("User Information not found for given Email", details);
+    	ErrorResponse errorResponse = new ErrorResponse("User Information not found for given input ", details);
     	
 		log.error("User Information not found for given Email: {}", details);
 		return ResponseEntity.badRequest().body(errorResponse);
@@ -51,45 +50,24 @@ public class GlobalExceptionHandler   extends ResponseEntityExceptionHandler{
    		return ResponseEntity.badRequest().body(errorResponse);
    	}
     
-    @ExceptionHandler(DataIntegrityViolationException.class)
-   	public @ResponseBody ResponseEntity<ErrorResponse> handleFileException( DataIntegrityViolationException exception) {
+    @ResponseStatus()
+	public final @ResponseBody  ResponseEntity<ErrorResponse> handleResponseStatusException(final ResponseStatusException exception,
+			final HttpServletRequest request) {
+    	
+    	 List<String> details = new ArrayList<>();
+         details.add(exception.getLocalizedMessage());
+         ErrorResponse error = new ErrorResponse(exception.getStatus().toString(), details);
+         return new ResponseEntity<>(error, exception.getStatus());
+	}   
+    
+    @ExceptionHandler(Exception.class)
+   	public @ResponseBody ResponseEntity<ErrorResponse> handleException( Exception exception) {
        	 List<String> details = new ArrayList<>();
             details.add(exception.getLocalizedMessage());
-       	ErrorResponse errorResponse = new ErrorResponse("DataIntegrityViolationException", details);
+       	ErrorResponse errorResponse = new ErrorResponse("Exception Occured", details);
        	
-   		log.error("DataIntegrityViolationException: {}", details);
+   		log.error("Exception occured: {}", details);
    		return ResponseEntity.badRequest().body(errorResponse);
    	}
     
-    
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-	public final @ResponseBody  ResponseEntity<ErrorResponse> handleBadRequestException(final ResponseStatusException exception,
-			final HttpServletRequest request) {
-
-    	 List<String> details = new ArrayList<>();
-         details.add(exception.getLocalizedMessage());
-         ErrorResponse error = new ErrorResponse("BAD_REQUEST", details);
-         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-	}
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-   	public final @ResponseBody  ResponseEntity<ErrorResponse> handleInternalServer(final ResponseStatusException exception,
-   			final HttpServletRequest request) {
-
-       	 List<String> details = new ArrayList<>();
-            details.add(exception.getLocalizedMessage());
-            ErrorResponse error = new ErrorResponse("INTERNAL_SERVER_ERROR", details);
-            return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-   	}
-    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-   	public final @ResponseBody  ResponseEntity<ErrorResponse> handleMethodNotAllowedException(final ResponseStatusException exception,
-   			final HttpServletRequest request) {
-
-       	 List<String> details = new ArrayList<>();
-            details.add(exception.getLocalizedMessage());
-            ErrorResponse error = new ErrorResponse("METHOD_NOT_ALLOWED", details);
-            return new ResponseEntity<>(error, HttpStatus.METHOD_NOT_ALLOWED);
-            
-   	}
-    
-       
 }
