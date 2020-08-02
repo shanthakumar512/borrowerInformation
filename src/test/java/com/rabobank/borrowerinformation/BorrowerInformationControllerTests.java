@@ -1,4 +1,4 @@
-package com.rabobank.loanuserinformation;
+package com.rabobank.borrowerinformation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,27 +20,30 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.rabobank.loanuserinformation.Repository.LoanUsersRepository;
-import com.rabobank.loanuserinformation.exceptions.LoanUserNotFoundException;
-import com.rabobank.loanuserinformation.model.Address;
-import com.rabobank.loanuserinformation.request.LoanUserRequest;
-import com.rabobank.loanuserinformation.services.LoanUsersService;
+import com.rabobank.borrowerinformation.H2JpaConfig;
+import com.rabobank.borrowerinformation.BorrowerInformationApplication;
+import com.rabobank.borrowerinformation.Repository.BorrowersRepository;
+import com.rabobank.borrowerinformation.exceptions.BorrowerNotFoundException;
+import com.rabobank.borrowerinformation.model.Address;
+import com.rabobank.borrowerinformation.model.Borrower;
+import com.rabobank.borrowerinformation.request.BorrowerRequest;
+import com.rabobank.borrowerinformation.services.BorrowerService;
 
 
-@SpringBootTest(classes = {LoanUserInformationApplication.class, H2JpaConfig.class },
+@SpringBootTest(classes = {BorrowerInformationApplication.class, H2JpaConfig.class },
 webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 @ActiveProfiles("test")
 @EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
-class LoanUserInformationControllerTests {
+class BorrowerInformationControllerTests {
 	@Autowired
 	private TestRestTemplate restTemplate;
 	
 	@Autowired 
-	LoanUsersRepository loanUsersRepository;
+	BorrowersRepository borrowersRepository;
 	
 	@Autowired 
-	LoanUsersService loanUsersService;
+	BorrowerService borrowerService;
 	
 	@LocalServerPort
 	private int port;
@@ -49,12 +52,13 @@ class LoanUserInformationControllerTests {
 		return "http://localhost:" + port;
 	}
 	
+	@Test	
 	@Rollback(false)
 	void addLoanUserFromControllerTest() {
-		LoanUserRequest addUserRequest= new LoanUserRequest();
-		addUserRequest.setUserFirstname("user1");
-		addUserRequest.setUserLastname("user1");
-		addUserRequest.setUserEmail("abc@gmail.com");
+		BorrowerRequest borrowerRequest= new BorrowerRequest();
+		borrowerRequest.setBorrowerFirstname("user1");
+		borrowerRequest.setBorrowerLastname("user1");
+		borrowerRequest.setBorrowerEmail("abc@gmail.com");
 		Address propertyAddress = new Address();
 		propertyAddress.setAddressLine1("a1");
 		propertyAddress.setAddressLine2("a2");
@@ -62,8 +66,8 @@ class LoanUserInformationControllerTests {
 		propertyAddress.setCity("city");
 		propertyAddress.setState("TN");
 		propertyAddress.setCountry("Ind");
-		addUserRequest.setPropertyAddress(propertyAddress);
-		ResponseEntity<LoanUserRequest[]> postResponse = restTemplate.postForEntity(getRootUrl() + "/loanUser/addLoanUser", addUserRequest, LoanUserRequest[].class);
+		borrowerRequest.setPropertyAddress(propertyAddress);
+		ResponseEntity<Borrower[]> postResponse = restTemplate.postForEntity(getRootUrl() + "/loanUser/addLoanUser", borrowerRequest, Borrower[].class);
 		
 		assertNotNull(postResponse.getBody());
 	}
@@ -72,8 +76,8 @@ class LoanUserInformationControllerTests {
 	@Rollback(false)
 	void findAllUsersFromControllerTest() {
 
-		ResponseEntity<LoanUserRequest[]> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUsers", LoanUserRequest[].class);
-		 assertEquals(loanUsersRepository.findAll().size(), response.getBody().length);
+		ResponseEntity<Borrower[]> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUsers", Borrower[].class);
+		 assertEquals(borrowersRepository.findAll().size(), response.getBody().length);
 	}
 	
 	@Test
@@ -82,8 +86,8 @@ class LoanUserInformationControllerTests {
 		 Map<String, String> uriVariables = new HashMap<>();
 		 uriVariables.put("userFirstName", "user1");
 		
-		ResponseEntity<LoanUserRequest> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUserByFirstName/{userFirstName}", LoanUserRequest.class,uriVariables);
-		assertEquals(response.getBody().getUserFirstname(), "user1");
+		ResponseEntity<Borrower> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUserByFirstName/{userFirstName}", Borrower.class,uriVariables);
+		assertEquals(response.getBody().getBorrowerFirstname(), "user1");
 	}
 	
 	
@@ -93,15 +97,15 @@ class LoanUserInformationControllerTests {
 		 Map<String, String> uriVariables = new HashMap<>();
 		 uriVariables.put("userLastName", "user1");
 		
-		ResponseEntity<LoanUserRequest> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUserByLastName/{userLastName}", LoanUserRequest.class,uriVariables);
-		assertEquals(response.getBody().getUserLastname(), "user1");
+		ResponseEntity<Borrower> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUserByLastName/{userLastName}", Borrower.class,uriVariables);
+		assertEquals(response.getBody().getBorrowerLastname(), "user1");
 	}
 	
 	
 	@Test
 	@Rollback(false)
 	void findByNotExistingLastNameTest(){
-		Assertions.assertThrows(LoanUserNotFoundException.class,()->loanUsersService.findByLastName("usersdd"));
+		Assertions.assertThrows(BorrowerNotFoundException.class,()->borrowerService.findByLastName("usersdd"));
 	}
 	
 	

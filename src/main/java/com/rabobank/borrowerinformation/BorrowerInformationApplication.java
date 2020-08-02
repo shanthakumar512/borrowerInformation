@@ -1,4 +1,4 @@
-package com.rabobank.loanuserinformation;
+package com.rabobank.borrowerinformation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,10 +9,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableSwagger2
-class LoanUserInformationApplication {
+class BorrowerInformationApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LoanUserInformationApplication.class, args);
+		SpringApplication.run(BorrowerInformationApplication.class, args);
 	}
 
 }

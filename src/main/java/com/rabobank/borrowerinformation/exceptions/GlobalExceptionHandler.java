@@ -1,4 +1,4 @@
-package com.rabobank.loanuserinformation.exceptions;
+package com.rabobank.borrowerinformation.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.rabobank.loanuserinformation.model.ErrorResponse;
+import com.rabobank.borrowerinformation.model.ErrorResponse;
 
 
 /**
@@ -30,23 +30,23 @@ import com.rabobank.loanuserinformation.model.ErrorResponse;
 public class GlobalExceptionHandler   extends ResponseEntityExceptionHandler{
 	Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler(LoanUserNotFoundException.class)
-	public @ResponseBody ResponseEntity<ErrorResponse> handleLoanUserNotFoundException( LoanUserNotFoundException exception) {
+    @ExceptionHandler(BorrowerNotFoundException.class)
+	public @ResponseBody ResponseEntity<ErrorResponse> handleLoanBorrowerNotFoundException( BorrowerNotFoundException exception) {
     	 List<String> details = new ArrayList<>();
          details.add(exception.getLocalizedMessage());
-    	ErrorResponse errorResponse = new ErrorResponse("User Information not found for given input ", details);
+    	ErrorResponse errorResponse = new ErrorResponse("Borrower Information not found for given input ", details);
     	
-		log.error("User Information not found for given Email: {}", details);
+		log.error("Borrower Information not found for given Email: {}", details);
 		return ResponseEntity.badRequest().body(errorResponse);
 	}
     
-    @ExceptionHandler(UserDetailsAlreadyExistForEmailIDException.class)
-   	public @ResponseBody ResponseEntity<ErrorResponse> handleUserDetailsAlreadyExistForEmailIDException( UserDetailsAlreadyExistForEmailIDException exception) {
+    @ExceptionHandler(BorrowerDetailsAlreadyExistForEmailIDException.class)
+   	public @ResponseBody ResponseEntity<ErrorResponse> handleBorrowerDetailsAlreadyExistForEmailIDException( BorrowerDetailsAlreadyExistForEmailIDException exception) {
        	 List<String> details = new ArrayList<>();
             details.add(exception.getLocalizedMessage());
-       	ErrorResponse errorResponse = new ErrorResponse("User Details already exists for email", details);
+       	ErrorResponse errorResponse = new ErrorResponse("Borrower Details already exists for email", details);
        	
-   		log.error("User Details already exists for email :{}", details);
+   		log.error("Borrower Details already exists for email :{}", details);
    		return ResponseEntity.badRequest().body(errorResponse);
    	}
     

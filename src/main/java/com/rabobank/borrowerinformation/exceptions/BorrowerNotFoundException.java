@@ -1,13 +1,13 @@
 /**
  * 
  */
-package com.rabobank.loanuserinformation.exceptions;
+package com.rabobank.borrowerinformation.exceptions;
 
 /**
  * @author Admin
  *
  */
-public class LoanUserNotFoundException extends Exception {
+public class BorrowerNotFoundException extends Exception {
 
 	/**
 	 * 
@@ -17,7 +17,7 @@ public class LoanUserNotFoundException extends Exception {
 	/**
 	 * @param message
 	 */
-	public LoanUserNotFoundException(String message) {
+	public BorrowerNotFoundException(String message) {
 		super(message);
 	}
 

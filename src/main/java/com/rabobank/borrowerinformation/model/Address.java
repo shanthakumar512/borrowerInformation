@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.rabobank.loanuserinformation.model;
+package com.rabobank.borrowerinformation.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -37,7 +37,7 @@ public class Address {
 
 	@OneToOne(mappedBy="propertyAddress", cascade=CascadeType.ALL)
 	@JsonBackReference
-	private LoanUser loanUser;
+	private Borrower borrower;
 	
 	public Address() {
 		
@@ -144,21 +144,11 @@ public class Address {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	/**
-	 * @return the loanUser
-	 */
-	public LoanUser getLoanUser() {
-		return loanUser;
+	public Borrower getBorrower() {
+		return borrower;
 	}
-	/**
-	 * @param loanUser the loanUser to set
-	 */
-	public void setLoanUser(LoanUser loanUser) {
-		this.loanUser = loanUser;
+	public void setBorrower(Borrower borrower) {
+		this.borrower = borrower;
 	}
-		
-	
-	
-
 	
 }

@@ -1,4 +1,4 @@
-package com.rabobank.loanuserinformation.model;
+package com.rabobank.borrowerinformation.model;
 
 import java.util.List;
 public class ErrorResponse {
