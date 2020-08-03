@@ -87,7 +87,7 @@ class BorrowerInformationControllerTests {
 		 uriVariables.put("userFirstName", "user1");
 		
 		ResponseEntity<Borrower> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUserByFirstName/{userFirstName}", Borrower.class,uriVariables);
-		assertEquals(response.getBody().getBorrowerFirstname(), "user1");
+		assertEquals("user1",response.getBody().getBorrowerFirstname());
 	}
 	
 	
@@ -98,7 +98,7 @@ class BorrowerInformationControllerTests {
 		 uriVariables.put("userLastName", "user1");
 		
 		ResponseEntity<Borrower> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUserByLastName/{userLastName}", Borrower.class,uriVariables);
-		assertEquals(response.getBody().getBorrowerLastname(), "user1");
+		assertEquals("user1",response.getBody().getBorrowerLastname());
 	}
 	
 	

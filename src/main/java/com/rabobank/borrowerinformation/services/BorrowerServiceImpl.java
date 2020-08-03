@@ -33,7 +33,7 @@ public class BorrowerServiceImpl implements BorrowerService {
 	public Borrower addBorrower(BorrowerRequest addUserRequest) throws BorrowerDetailsAlreadyExistForEmailIDException {
 		logger.info("Entered addBorrower() for new Borrower with first Name {}", addUserRequest.getBorrowerFirstname());
 		if (Boolean.TRUE.equals(borrowersRepository.existsByBorrowerEmail(addUserRequest.getBorrowerEmail()))) {
-			logger.info("Borrower Details already exists for the email Id {}", addUserRequest.getBorrowerEmail());
+			logger.error("Borrower Details already exists for the email Id {}", addUserRequest.getBorrowerEmail());
 			throw new BorrowerDetailsAlreadyExistForEmailIDException(
 					"Borrower Details already exists for the email Id" + addUserRequest.getBorrowerEmail());
 		}

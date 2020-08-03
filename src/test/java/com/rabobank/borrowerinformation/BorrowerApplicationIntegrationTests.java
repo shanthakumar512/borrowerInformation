@@ -55,12 +55,7 @@ class BorrowerApplicationIntegrationTests {
 	private String getRootUrl() {
 		return "http://localhost:" + port;
 	}
-	
-	
-	@Test
-	void contextLoads() {
-	}
-	
+
 	@Test
 	@Rollback(false)
 	void controllerAddLoanUserFromTest() {
@@ -96,7 +91,8 @@ class BorrowerApplicationIntegrationTests {
 		propertyAddress.setState("TN");
 		propertyAddress.setCountry("Ind");
 		borrowerRequest.setPropertyAddress(propertyAddress);
-		 Assertions.assertThrows(RestClientException.class,()-> restTemplate.postForEntity(getRootUrl() + "/loanUser/addLoanUser", borrowerRequest, Borrower[].class));
+		String URL=getRootUrl() + "/loanUser/addLoanUser";
+		 Assertions.assertThrows(RestClientException.class,()-> restTemplate.postForEntity(URL, borrowerRequest, Borrower[].class));
 	}
 		
 	@Test
@@ -127,7 +123,7 @@ class BorrowerApplicationIntegrationTests {
 		restTemplate.postForEntity(getRootUrl() + "/loanUser/addLoanUser", borrowerRequest, Borrower[].class);
 		ResponseEntity<Borrower> response = restTemplate.getForEntity(
 				getRootUrl() + "/loanUser/getLoanUserByFirstName/{userFirstName}", Borrower.class, uriVariables);
-		assertEquals(response.getBody().getBorrowerFirstname(), "user10");
+		assertEquals("user10",response.getBody().getBorrowerFirstname());
 	}
 	
 	
@@ -150,7 +146,7 @@ class BorrowerApplicationIntegrationTests {
 		uriVariables.put("userLastName", "user9");
 		restTemplate.postForEntity(getRootUrl() + "/loanUser/addLoanUser", borrowerRequest, Borrower[].class);
 		ResponseEntity<Borrower> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUserByLastName/{userLastName}", Borrower.class,uriVariables);
-		assertEquals(response.getBody().getBorrowerLastname(), "user9");
+		assertEquals("user9",response.getBody().getBorrowerLastname());
 	}
 
 	@Test
@@ -160,6 +156,7 @@ class BorrowerApplicationIntegrationTests {
 		 uriVariables.put("userLastName", "user1");
 		
 		 restTemplate.getForEntity(getRootUrl() + "/loanUser/getLoanUserByLastName/{userLastName}", Borrower.class,uriVariables);
+		 assertNotNull(restTemplate);
 	}
 	
 	@Test
@@ -232,7 +229,7 @@ class BorrowerApplicationIntegrationTests {
 	@Rollback(false)
 	void servicefindByFirstNameTest() throws BorrowerNotFoundException {
 		Borrower user = borrowerService.findByFirstName("user5");
-		 assertEquals(user.getBorrowerFirstname(), "user5");
+		 assertEquals("user5",user.getBorrowerFirstname());
 	}
 	
 	@Test
@@ -245,7 +242,7 @@ class BorrowerApplicationIntegrationTests {
 	@Rollback(false)
 	void servicefindByLastNameTest() throws BorrowerNotFoundException {
 		Borrower user = borrowerService.findByLastName("borrower5");
-		 assertEquals(user.getBorrowerLastname(), "borrower5");
+		 assertEquals("borrower5",user.getBorrowerLastname());
 	}
 	
 	

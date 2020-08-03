@@ -111,7 +111,7 @@ class BorrowerInformationServicesTest {
 	@Rollback(false)
 	void findByFirstNameTest() throws BorrowerNotFoundException {
 		Borrower user = borrowerService.findByFirstName(USER1);
-		 assertEquals(user.getBorrowerFirstname(), USER1);
+		 assertEquals(USER1,user.getBorrowerFirstname());
 	}
 	
 	@Test
@@ -124,7 +124,7 @@ class BorrowerInformationServicesTest {
 	@Rollback(false)
 	void findByLastNameTest() throws BorrowerNotFoundException {
 		Borrower user = borrowerService.findByLastName(USER1);
-		 assertEquals(user.getBorrowerLastname(), USER1);
+		 assertEquals(USER1,user.getBorrowerLastname());
 	}
 	
 	
