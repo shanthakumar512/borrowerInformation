@@ -24,11 +24,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 
-import com.rabobank.borrowerinformation.Repository.BorrowersRepository;
 import com.rabobank.borrowerinformation.exceptions.BorrowerNotFoundException;
 import com.rabobank.borrowerinformation.exceptions.BorrowerDetailsAlreadyExistForEmailIDException;
 import com.rabobank.borrowerinformation.model.Address;
 import com.rabobank.borrowerinformation.model.Borrower;
+import com.rabobank.borrowerinformation.repository.BorrowersRepository;
 import com.rabobank.borrowerinformation.request.BorrowerRequest;
 import com.rabobank.borrowerinformation.services.BorrowerService;
 

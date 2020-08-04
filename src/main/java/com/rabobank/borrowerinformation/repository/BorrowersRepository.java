@@ -1,4 +1,4 @@
-package com.rabobank.borrowerinformation.Repository;
+package com.rabobank.borrowerinformation.repository;
 
 import java.util.List;
 import java.util.Optional;

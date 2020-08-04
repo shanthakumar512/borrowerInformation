@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rabobank.borrowerinformation.Repository.BorrowersRepository;
 import com.rabobank.borrowerinformation.exceptions.BorrowerNotFoundException;
 import com.rabobank.borrowerinformation.exceptions.BorrowerDetailsAlreadyExistForEmailIDException;
 import com.rabobank.borrowerinformation.model.Address;
 import com.rabobank.borrowerinformation.model.Borrower;
+import com.rabobank.borrowerinformation.repository.BorrowersRepository;
 import com.rabobank.borrowerinformation.request.BorrowerRequest;
 
 /**
