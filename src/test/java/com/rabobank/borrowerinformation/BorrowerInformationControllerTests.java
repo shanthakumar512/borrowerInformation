@@ -82,6 +82,14 @@ class BorrowerInformationControllerTests {
 	
 	@Test
 	@Rollback(false)
+	void findAllEmailsFromControllerTest() {
+
+		ResponseEntity<String[]> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getAllBorrowerEmails", String[].class);
+		 assertEquals(borrowersRepository.findAllEmails().size(), response.getBody().length);
+	}
+	
+	@Test
+	@Rollback(false)
 	void findByFirstNameFromControllerTest() {
 		 Map<String, String> uriVariables = new HashMap<>();
 		 uriVariables.put("userFirstName", "user1");

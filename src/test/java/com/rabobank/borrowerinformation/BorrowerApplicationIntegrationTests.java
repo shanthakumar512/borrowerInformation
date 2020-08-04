@@ -225,15 +225,8 @@ class BorrowerApplicationIntegrationTests {
 		 assertNotNull(userslist);
 	}
 	
-//	@Test
-	@Rollback(false)
-	void servicefindByFirstNameTest() throws BorrowerNotFoundException {
-		Borrower user = borrowerService.findByFirstName("user5");
-		 assertEquals("user5",user.getBorrowerFirstname());
-	}
 	
 	@Test
-	@Rollback(false)
 	void servicefindByNotExistingFirstNameTest() {
 		Assertions.assertThrows(BorrowerNotFoundException.class,()->borrowerService.findByFirstName("usersdd"));
 	}
@@ -250,6 +243,14 @@ class BorrowerApplicationIntegrationTests {
 	@Rollback(false)
 	void serviceservicefindByNotExistingLastNameTest(){
 		Assertions.assertThrows(BorrowerNotFoundException.class,()->borrowerService.findByLastName("usersdd"));
+	}
+	
+	@Test
+	@Rollback(false)
+	void findAllEmailsFromControllerTest() {
+
+		ResponseEntity<String[]> response = restTemplate.getForEntity(getRootUrl() + "/loanUser/getAllBorrowerEmails", String[].class);
+		 assertEquals(borrowersRepository.findAllEmails().size(), response.getBody().length);
 	}
 	
 	

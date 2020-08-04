@@ -116,6 +116,13 @@ class BorrowerInformationServicesTest {
 	
 	@Test
 	@Rollback(false)
+	void findAllBorrowerEmails() throws BorrowerNotFoundException {
+		List<String> user = borrowerService.getAllBorrowerEmails();
+		 assertTrue(user.size()>0);
+	}
+	
+	@Test
+	@Rollback(false)
 	void findByNotExistingFirstNameTest() {
 		Assertions.assertThrows(BorrowerNotFoundException.class,()->borrowerService.findByFirstName("usersdd"));
 	}
