@@ -61,7 +61,7 @@ public class BorrowerInformationController {
 		return  new ResponseEntity<>(borrowers, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Loads all the Borrower information from the Borrower Database ", response = Borrower.class, tags = "getLoanInfoByLoanNumber")
+	@ApiOperation(value = "Loads all the Borrower information from the Borrower Database ", response = Borrower.class, tags = "getLoanUser")
 	@ApiResponses(value = { 
 	            @ApiResponse(code = 200, message = "Success|OK"),
 	            @ApiResponse(code = 401, message = "not authorized!"), 

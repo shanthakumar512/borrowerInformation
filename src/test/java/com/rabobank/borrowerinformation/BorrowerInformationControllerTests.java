@@ -58,7 +58,7 @@ class BorrowerInformationControllerTests {
 		BorrowerRequest borrowerRequest= new BorrowerRequest();
 		borrowerRequest.setBorrowerFirstname("user1");
 		borrowerRequest.setBorrowerLastname("user1");
-		borrowerRequest.setBorrowerEmail("abc@gmail.com");
+		borrowerRequest.setBorrowerEmail("us@gmail.com");
 		Address propertyAddress = new Address();
 		propertyAddress.setAddressLine1("a1");
 		propertyAddress.setAddressLine2("a2");

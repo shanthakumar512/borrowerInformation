@@ -47,7 +47,7 @@ class BorrowerInformationServicesTest {
 		BorrowerRequest borrowerRequest= new BorrowerRequest();
 		borrowerRequest.setBorrowerFirstname(USER1);
 		borrowerRequest.setBorrowerLastname(USER1);
-		borrowerRequest.setBorrowerEmail("abc@gmail.com");
+		borrowerRequest.setBorrowerEmail("shan@gmail.com");
 		Address propertyAddress = new Address();
 		propertyAddress.setAddressLine1("a1");
 		propertyAddress.setAddressLine2("a2");
@@ -67,7 +67,7 @@ class BorrowerInformationServicesTest {
 		BorrowerRequest borrowerRequest= new BorrowerRequest();
 		borrowerRequest.setBorrowerFirstname(USER2);
 		borrowerRequest.setBorrowerLastname(USER2);
-		borrowerRequest.setBorrowerEmail("abc@gmail.com");
+		borrowerRequest.setBorrowerEmail("shan@gmail.com");
 		Address propertyAddress = new Address();
 		propertyAddress.setAddressLine1("a1");
 		propertyAddress.setAddressLine2("a2");
@@ -104,7 +104,7 @@ class BorrowerInformationServicesTest {
 	@Rollback(false)
 	void findAllUsersTest() {
 		List<Borrower> userslist= borrowerService.findAllBorrowers();
-		 assertEquals(2, userslist.size());
+		 assertEquals(borrowersRepository.count(), userslist.size());
 	}
 	
 	@Test

@@ -185,7 +185,7 @@ class BorrowerApplicationIntegrationTests {
 		BorrowerRequest borrowerRequest= new BorrowerRequest();
 		borrowerRequest.setBorrowerFirstname("user6");
 		borrowerRequest.setBorrowerLastname("user6");
-		borrowerRequest.setBorrowerEmail("abc@gmail.com");
+		borrowerRequest.setBorrowerEmail("borrower5@gmail.com");
 		Address propertyAddress = new Address();
 		propertyAddress.setAddressLine1("a1");
 		propertyAddress.setAddressLine2("a2");
