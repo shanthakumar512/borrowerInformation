@@ -109,8 +109,21 @@ class BorrowerInformationServicesTest {
 	
 	@Test
 	@Rollback(false)
-	void findByFirstNameTest() throws BorrowerNotFoundException {
-		Borrower user = borrowerService.findByFirstName(USER1);
+	void findByFirstNameTest() throws BorrowerNotFoundException, BorrowerDetailsAlreadyExistForEmailIDException {
+		BorrowerRequest borrowerRequest= new BorrowerRequest();
+		borrowerRequest.setBorrowerFirstname("Borrower5");
+		borrowerRequest.setBorrowerLastname("Borrower5");
+		borrowerRequest.setBorrowerEmail("user2@gmail.com");
+		Address propertyAddress = new Address();
+		propertyAddress.setAddressLine1("a1");
+		propertyAddress.setAddressLine2("a2");
+		propertyAddress.setAddressLine3("a3");
+		propertyAddress.setCity("city");
+		propertyAddress.setState("TN");
+		propertyAddress.setCountry("Ind");
+		borrowerRequest.setPropertyAddress(propertyAddress);
+		borrowerService.addBorrower(borrowerRequest);
+		Borrower user = borrowerService.findByFirstName("Borrower5");
 		 assertEquals(USER1,user.getBorrowerFirstname());
 	}
 	
@@ -130,8 +143,8 @@ class BorrowerInformationServicesTest {
 	@Test
 	@Rollback(false)
 	void findByLastNameTest() throws BorrowerNotFoundException {
-		Borrower user = borrowerService.findByLastName(USER1);
-		 assertEquals(USER1,user.getBorrowerLastname());
+		Borrower user = borrowerService.findByLastName("Borrower5");
+		 assertEquals("Borrower5",user.getBorrowerLastname());
 	}
 	
 	
