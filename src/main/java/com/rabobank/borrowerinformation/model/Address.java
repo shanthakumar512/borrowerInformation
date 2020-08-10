@@ -35,9 +35,6 @@ public class Address {
 	@Size(max = 50)
 	private String addressLine3;
 
-	@OneToOne(mappedBy="propertyAddress", cascade=CascadeType.ALL)
-	@JsonBackReference
-	private Borrower borrower;
 	
 	public Address() {
 		
@@ -144,11 +141,11 @@ public class Address {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public Borrower getBorrower() {
-		return borrower;
-	}
-	public void setBorrower(Borrower borrower) {
-		this.borrower = borrower;
-	}
-	
+//	public Borrower getBorrower() {
+//		return borrower;
+//	}
+//	public void setBorrower(Borrower borrower) {
+//		this.borrower = borrower;
+//	}
+//	
 }
